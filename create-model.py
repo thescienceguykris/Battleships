@@ -135,7 +135,7 @@ def evaluatePredictions(predictions, y_test):
 if __name__ == '__main__':
     if not (len(sys.argv) == 3):
         print("Incorrect usage of create-data.py")
-        print("create-data.py [number of player maps] [output model file name]")
+        print("create-model.py [number of player maps] [output model file name]")
         numberOfMaps = int(input("Number of player maps: "))
         modelName = input("Model name: ")
     else:
@@ -144,7 +144,7 @@ if __name__ == '__main__':
             modelName = str(sys.argv[2])
         except:
             print("Incorrect usage of create-data.py")
-            sys.exit("create-data.py [number of player maps] [output model file name]")
+            sys.exit("create-model.py [number of player maps] [output model file name]")
 
     df = generateMaps(numberOfMaps)
     x_train, x_test, y_train, y_test = splitData(df)
