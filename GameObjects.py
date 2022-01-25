@@ -73,6 +73,15 @@ class Player():
     def getShotMatrix(self):
         return self.shotsFired
 
+    def draw(self, showShips=False):
+        plt.figure()
+        if showShips:
+            plt.subplot(121)
+            plt.imshow(self.getShipMatrix(), cmap='hot')
+            plt.subplot(122)
+        plt.imshow(self.getShotMatrix(), cmap='hot')
+        plt.show()
+
 class Ship():
     
     def __init__(self, size):
@@ -124,5 +133,3 @@ class Ship():
     
     def generateMatrix(self):
         return self.shipMatrix
-    
-
