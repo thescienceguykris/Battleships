@@ -4,9 +4,9 @@ import pandas as pd
 import sys
 
 from GameObjects import Game
-from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
-from sklearn.metrics import accuracy_score
+from tensorflow.keras.metrics import RootMeanSquaredError
 
 mapSize = {"x": 10, "y": 10}
 
@@ -81,35 +81,23 @@ def buildModel(X, Y):
     model.add(Dense( units=128, activation='relu'))
     model.add(Dense( units=len(Y[0]), activation='sigmoid'))
 
-    model.compile( loss='binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
+    model.compile( loss='binary_crossentropy', optimizer='adam', metrics=[RootMeanSquaredError()])
 
     return model
 
 # train model
 def trainModel(x_train, y_train, model):
-    model.fit(x_train, y_train, epochs=150, batch_size=32)
+    model.fit(x_train, y_train, epochs=500, batch_size=32)
 
 # make predictions based on model
 def modelPredictions(model, x_test):
     return model.predict( x_test )
 
-# accuracy classification needs to convert the probabilities into definitive hits
-# this could probably be done in a better way based upon how far along in the game the AI is
-# this will mean that shots aren't wasted
-def correctPredictions(y_test_predictions):
-    corrected_predictions = []
-
-    for prediction in y_test_predictions:
-        
-        highest_predictions = np.flip(np.sort(prediction))
-        topScores = highest_predictions[5+4+3+2+2]
-        corrected_predictions.append(list(map( lambda score: 1 if score >= topScores else 0, prediction )))
-    
-    return corrected_predictions
-
 def evaluatePredictions(predictions, y_test):
-    acc_score = accuracy_score ( y_test.flatten(), np.array(predictions).flatten() )
-    print("Model Score:", acc_score)
+    rms_score = RootMeanSquaredError()
+    rms_score.update_state( y_test.flatten(), np.array(predictions).flatten() )
+
+    print("RMS:", rms_score.result().numpy())
 
 # this could be setup as some form of experiments class
 
@@ -133,7 +121,6 @@ if __name__ == '__main__':
     trainModel(x_train, y_train, model)
 
     predictions = modelPredictions(model, x_test)
-    corrected = correctPredictions(predictions)
-    evaluatePredictions(corrected, y_test)
+    evaluatePredictions(predictions, y_test)
 
     model.save(modelName + '.model')
