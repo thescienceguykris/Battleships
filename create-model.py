@@ -50,25 +50,6 @@ def generateMaps(numberOfMapsToGenerate):
         # shotsToScorePoints = trueShips - shipsHit = [0 1 1 0] - [1 1 0 0] = [-1 0 1 0]
         # this will only show ship points that haven't been hit
         
-        # plt.subplot(231)
-        # plt.title("Ship Positions")
-        # plt.imshow(trueShips, cmap='hot', interpolation='nearest')
-        # plt.subplot(232)
-        # plt.title("Shots Fired")
-        # plt.imshow(shotsFiredOverlay, cmap='hot', interpolation='nearest')
-        # plt.subplot(233)
-        # plt.title("Ship Hits")
-        # plt.imshow(shipsHit, cmap='hot', interpolation='nearest')
-        # plt.subplot(234)
-        # plt.title("NOT Ship Positions")
-        # plt.imshow(missData, cmap='hot', interpolation='nearest')
-        # plt.subplot(235)
-        # plt.title("Shots Fired")
-        # plt.imshow(shotsFiredOverlay, cmap='hot', interpolation='nearest')
-        # plt.subplot(236)
-        # plt.title("Shots Missed")
-        # plt.imshow(missedHits, cmap='hot', interpolation='nearest')
-        # plt.show()
         print (".", end="")
 
     # prepare the data to be exported
