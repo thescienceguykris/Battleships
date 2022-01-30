@@ -25,6 +25,7 @@ class Player():
     
     def __init__(self):
         self.ships = [Ship(3), Ship(5), Ship(4), Ship(2), Ship(2)]
+        self.history = []
         self.shotsFired = np.zeros( (mapSize["x"], mapSize["y"]), dtype=int )
     
     def getHits(self):
@@ -48,6 +49,8 @@ class Player():
             if ship.shootAt(target):
                 successfulHit = True
         
+        self.history.append( self.getShotMatrix() )
+
         self.shotsFired[x,y] = 1 if successfulHit else -1
         return successfulHit, alreadyShot
 
