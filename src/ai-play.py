@@ -121,7 +121,7 @@ def evaluationGameLoop(playerAI, numberOfPlayers=100, aiName="AI"):
     for ax, spine in ax.spines.items():
         spine.set_visible(False)
     
-    plt.savefig("/Users/kristurner/Documents/BlogPosts/Battleship/" + aiName + ".png", dpi=400 )
+    plt.savefig(aiName + ".png", dpi=400 )
         
 if __name__ == "__main__":
     if not (len(sys.argv) >= 2):
